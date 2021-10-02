@@ -1,0 +1,41 @@
+{
+  "name": "usermanagementdemo",
+  "version": "1.0.0",
+  "description": "A simple NodeJS project to demonstrate basic user authentication/authorization with JSON Web Tokens (jwt)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git remote -v https://github.com/SpyrosAlertas/usermanagementdemo-nodejs.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "JavaScript",
+    "Express",
+    "REST",
+    "JWT",
+    "Authentication",
+    "Authorization",
+    "MySQL",
+    "SQL"
+  ],
+  "author": "Spyros Alertas",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.3",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "faker": "^5.5.3"
+  }
+}
