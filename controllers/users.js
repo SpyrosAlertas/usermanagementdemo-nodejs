@@ -193,7 +193,7 @@ exports.login = async (req, res, next) => {
             // if users account is not enabled yet by admins, he can't login
             throw new ErrorResponse(ErrorCode.ACCOUNT_NOT_ENABLED.status, ErrorCode.ACCOUNT_NOT_ENABLED.code, ErrorCode.ACCOUNT_NOT_ENABLED.message);
         }
-        else if (!user.isNonLocked && timePassed < process.env.FAILED_ATTEMPTS_PERIOD) {
+        else if (!user.isNonLocked && timePassed < process.env.ACCOUNT_UNLOCK_TIME) {
             // if users account has been locked (due to many quick failed login attempts), he can't login temporarily
             // unless safety time period has passed so his account is 'unlocked' again
             throw new ErrorResponse(ErrorCode.ACCOUNT_LOCKED.status, ErrorCode.ACCOUNT_LOCKED.code, ErrorCode.ACCOUNT_LOCKED.message);
@@ -230,10 +230,11 @@ exports.login = async (req, res, next) => {
                     user.isNonLocked = false;
                 }
             } else {
-                // if safety time period has passed but user hasn't succesfully logged in before,
-                // still unlock his account and give him again shots to try to log in resetting his login attempts.
-                user.isNonLocked = true;
+                // if safety time period has passed but user hasn't succesfully logged in before, reset his failed tries
                 user.failedLoginAttempts = 1;
+                if (timePassed > process.env.ACCOUNT_UNLOCK_TIME)
+                    // If account unlock time has passed make sure his account is unlocked
+                    user.isNonLocked = true;
             }
             user.save();
         }
